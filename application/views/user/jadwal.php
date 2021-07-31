@@ -4,47 +4,56 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-    <?= $this->session->flashdata('message'); ?>
+    <div class="row">
+        <div class="col-lg ">
+            <?php if (validation_errors()) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= validation_errors(); ?>
+                </div>
+            <?php endif; ?>
 
-    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newJadwalModal">Tambah Jadwal</a>
+            <?= $this->session->flashdata('message'); ?>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Kode Matakuliah</th>
-                <th scope="col">Nama Matakuliah</th>
-                <th scope="col">Nama Dosen</th>
-                <th scope="col">Hari</th>
-                <th scope="col">Mulai</th>
-                <th scope="col">Selesai</th>
-                <th scope="col">Fakultas</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $i = 1; ?>
-            <?php foreach ($jadwal as $j) : ?>
-                <tr>
-                    <th scope="row"><?= $i; ?></th>
-                    <td><?= $j['kodemtk']; ?></td>
-                    <td><?= $j['namamtk']; ?></td>
-                    <td><?= $j['namadosen']; ?></td>
-                    <td><?= $j['hari']; ?></td>
-                    <td><?= $j['mulai']; ?></td>
-                    <td><?= $j['selesai']; ?></td>
-                    <td><?= $j['fakultas']; ?></td>
-                    <td>
-                        <a href="" class="badge badge-success">edit</a>
-                        <a href="" class="badge badge-danger">delete</a>
-                    </td>
-                </tr>
-                <?php $i++; ?>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newJadwalModal">Tambah Jadwal</a>
 
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Kode Matakuliah</th>
+                        <th scope="col">Nama Matakuliah</th>
+                        <th scope="col">Nama Dosen</th>
+                        <th scope="col">Hari</th>
+                        <th scope="col">Mulai</th>
+                        <th scope="col">Selesai</th>
+                        <th scope="col">Fakultas</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach ($jadwal as $j) : ?>
+                        <tr>
+                            <th scope="row"><?= $i; ?></th>
+                            <td><?= $j['kodemtk']; ?></td>
+                            <td><?= $j['namamtk']; ?></td>
+                            <td><?= $j['namadosen']; ?></td>
+                            <td><?= $j['hari']; ?></td>
+                            <td><?= $j['mulai']; ?></td>
+                            <td><?= $j['selesai']; ?></td>
+                            <td><?= $j['fakultas']; ?></td>
+                            <td>
+                                <a href=" <?= base_url('user/editjadwal/') . $j['kodemtk']; ?>" class="badge badge-success">edit</a>
+                                <a href="<?= base_url('user/hapusjadwal/') . $j['kodemtk']; ?>" class="badge badge-danger" onclick="return confirm('yakin?'); ">delete</a>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
 
+        </div>
+    </div>
 
 </div>
 <!-- /.container-fluid -->
@@ -59,7 +68,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newJadwalModalLabel">Add New Sub Menu</h5>
+                <h5 class="modal-title" id="newJadwalModalLabel">Tambah Jadwal</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -100,7 +109,7 @@
                     </div>
                     <div class="form-group">
                         <label>Fakultas</label>
-                        <select class="required form-select" name="fakultas" required>
+                        <select class="required form-select" name="fakultas" id="fakultas" required>
                             <option value="FTI">Fakultas Teknologi Informasi</option>
                             <option value="AS">Akademi Sekretari</option>
                             <option value="FEB">Fakultas Ekonomi dan Bisnis</option>
